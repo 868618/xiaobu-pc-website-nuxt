@@ -7,66 +7,110 @@
 
       <section class="w-1/2 h-full flex justify-center">
         <div class="h-1248 w-550 mt-229 shadow-2xl bg-white p-50">
-          <h1 class="text-35 font-bold text-[#000] leading-50">
-            与我们的现货销售团队取得联系
-          </h1>
+          <h1 class="text-35 font-bold text-[#000] leading-50">与我们的现货销售团队取得联系</h1>
 
           <form>
             <ul>
-              <li
-                class="h-60 border-b border-[#4D4D57] flex items-center mb-10"
-              >
-                <b class="text-[#6A6A6A] text-16 w-120 text-right">名*</b>
-                <input type="text" class="flex-1 outline-none peer pl-30" />
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">名*</b>
+                <input type="text" class="flex-1 outline-none peer pl-10" v-model="data.lastName" />
               </li>
 
-              <li
-                class="h-60 border-b border-[#4D4D57] flex items-center mb-10"
-              >
-                <b class="text-[#6A6A6A] text-16 w-120 text-right">姓*</b>
-                <input type="text" class="flex-1 outline-none peer pl-30" />
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">姓*</b>
+                <input
+                  type="text"
+                  class="flex-1 outline-none peer pl-10"
+                  v-model="data.firstName"
+                />
               </li>
 
-              <!-- <li
-                class="h-60 border-b border-[#4D4D57] flex items-center mb-10 relative"
-              >
-                <input type="text" class="flex-1 outline-none peer pl-30" />
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">公司电子邮箱*</b>
+                <input type="email" class="flex-1 outline-none peer pl-10" v-model="data.email" />
+              </li>
 
-                <b
-                  class="text-[#6A6A6A] text-16 peer-focus:text-red-700 peer-focus:-translate-y-full peer-focus:-bottom-5 peer-focus:left-10 absolute top-1/2 -translate-y-1/2 left-0 duration-100"
-                  >姓*</b
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">电话号码*</b>
+                <input type="text" class="flex-1 outline-none peer pl-10" v-model="data.phone" />
+              </li>
+
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">职称*</b>
+                <input type="text" class="flex-1 outline-none peer pl-10" v-model="data.title" />
+              </li>
+
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">国家*</b>
+
+                <select class="outline-none flex-1 pl-10" v-model="data.country">
+                  <option value="china">中国</option>
+                  <option value="japan">日本</option>
+                </select>
+              </li>
+
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">州/地区*</b>
+
+                <select class="outline-none flex-1 pl-10" v-model="data.area">
+                  <option value="volvo">北京</option>
+                  <option value="saab">上海</option>
+                  <option value="opel">南京</option>
+                </select>
+              </li>
+
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">员工数量*</b>
+
+                <input
+                  type="text"
+                  class="flex-1 outline-none peer pl-10"
+                  v-model="data.employees"
+                />
+              </li>
+
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">行业*</b>
+
+                <input type="text" class="flex-1 outline-none peer pl-10" v-model="data.trade" />
+              </li>
+
+              <!-- <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">用例*</b>
+
+                <input type="text" class="flex-1 outline-none peer pl-10" v-model="data.useCase" />
+              </li> -->
+
+              <li class="h-60 border-b border-[#4D4D57] flex items-center mb-10">
+                <b class="text-[#6A6A6A] text-16 text-right">您预期应用于什么*</b>
+
+                <input type="text" class="flex-1 outline-none peer pl-10" v-model="data.useFor" />
+              </li>
+
+              <li class="h-60 flex items-center mb-10 text-[#4D4D57] text-11 mt-30">
+                小布公司致力于保护你的隐私。我们不会与任何第三方共享您的数据。我们使用您提供的信息向您发送产品新闻和更新、活动信息和其它公告。您可以随时取消订阅这些通讯。有关更多信息，请查看我们的隐私政策。
+              </li>
+
+              <li class="h-60 text-[#666668] text-12 flex items-center select-none">
+                <input
+                  type="checkbox"
+                  id="subscribe"
+                  class="cursor-pointer"
+                  name="subscribe"
+                  :checked="data.checked"
+                  disabled
+                />
+                <label class="ml-10 cursor-pointer" for="subscribe">我同意接收公司的通信。</label>
+              </li>
+
+              <li class="h-38 mt-30">
+                <div
+                  @click="submit"
+                  class="w-full h-full border-2 border-[#4B7FE5] rounded-full flex items-center justify-center text-[#4B7FE5] text-13 cursor-pointer hover:opacity-75 select-none"
                 >
-              </li> -->
-
-              <li
-                class="h-60 border-b border-[#4D4D57] flex items-center mb-10"
-              >
-                <b class="text-[#6A6A6A] text-16 w-120 text-right"
-                  >公司电子邮箱*</b
-                >
-                <input type="text" class="flex-1 outline-none peer pl-30" />
+                  提交
+                </div>
               </li>
-
-              <!-- <li
-                class="h-60 border-b border-[#4D4D57] flex items-center mb-10"
-              >
-                <b class="text-[#6A6A6A] text-16">公司电子邮箱*</b>
-                <input type="text" class="flex-1 pl-10 outline-none" />
-              </li> -->
-
-              <li
-                class="h-60 border-b border-[#4D4D57] flex items-center mb-10"
-              >
-                <b class="text-[#6A6A6A] text-16 w-120 text-right">电话号码*</b>
-                <input type="text" class="flex-1 outline-none peer pl-30" />
-              </li>
-
-              <!-- <li
-                class="h-60 border-b border-[#4D4D57] flex items-center mb-10"
-              >
-                <b class="text-[#6A6A6A] text-16">电话号码*</b>
-                <input type="text" class="flex-1 pl-10 outline-none" />
-              </li> -->
             </ul>
           </form>
         </div>
@@ -108,3 +152,66 @@
     </section>
   </main>
 </template>
+
+<script setup lang="ts">
+type IData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string | number;
+  title: string;
+  country: string;
+  area: string;
+  employees: string | number;
+  trade: string;
+  // useCase: string;
+  useFor: string;
+  checked: boolean;
+};
+
+const data = reactive<IData>({
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  title: "",
+  country: "",
+  area: "",
+  employees: "",
+  trade: "",
+  useFor: "",
+  checked: true,
+});
+
+const submit = () => {
+  const maps = new Map([
+    ["firstName", "请输入姓"],
+    ["lastName", "请输入名"],
+    ["email", "请输入邮箱"],
+    ["phone", "请输入电话号码"],
+    ["title", "请输入职称"],
+    ["country", "请输入国家"],
+    ["area", "请输入州/地区"],
+    ["employees", "请输入员工数量"],
+    ["trade", "请输入行业"],
+    ["useFor", "请输入您预期应用"],
+  ]);
+
+  // const isAllOk = Object.values(data).every((i) => Boolean(i));
+  // console.log("AT-[ isAllOk &&&&&********** ]", isAllOk);
+
+  for (const [k, v] of Object.entries(data)) {
+    if (!v) {
+      alert(maps.get(k));
+      break;
+    }
+  }
+
+  // Object.entries(data).find(([k, v]) => {
+  //   if (!v) {
+  //     alert(maps.get(k));
+  //   }
+  //   return v;
+  // });
+};
+</script>
