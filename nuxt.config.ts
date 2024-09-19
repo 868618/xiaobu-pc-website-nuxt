@@ -10,7 +10,9 @@ export default defineNuxtConfig({
 
   modules: ["@nuxtjs/tailwindcss", "@element-plus/nuxt", "@nuxtjs/i18n"],
 
-  tailwindcss: {},
+  tailwindcss: {
+    viewer: false,
+  },
 
   vite: {
     server: {

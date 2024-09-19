@@ -170,10 +170,18 @@ const submit = async () => {
     }
   }
 
+  const loading = ElLoading.service({
+    lock: true,
+    text: "Loading",
+    background: "rgba(0, 0, 0, 0.7)",
+  });
+
   const res = await $fetch("/api/collect", {
     method: "POST",
     body: data,
   });
+
+  loading.close();
 
   console.log("res", res);
 };

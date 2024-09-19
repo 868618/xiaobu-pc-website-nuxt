@@ -7,11 +7,11 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "npm run build && node deploy.mjs"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
-    "@element-plus/nuxt": "^1.0.9",
     "@nuxtjs/i18n": "^8.5.3",
     "dayjs": "^1.11.13",
     "nuxt": "^3.13.0",
@@ -19,8 +19,10 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@element-plus/nuxt": "^1.0.9",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "element-plus": "^2.8.3",
+    "node-ssh": "^13.2.0",
     "sass-embedded": "^1.78.0"
   },
   "prettier": {
