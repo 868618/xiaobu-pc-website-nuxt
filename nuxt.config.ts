@@ -8,5 +8,22 @@ export default defineNuxtConfig({
     port: 8800,
   },
 
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@element-plus/nuxt", "@nuxtjs/i18n"],
+
+  tailwindcss: {},
+
+  vite: {
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://localhost:5566",
+          changeOrigin: true,
+
+          // configure() {
+          //   console.log("AT-[ configure 进入到代理器里 xxxxxx &&&&&********** ]");
+          // },
+        },
+      },
+    },
+  },
 });

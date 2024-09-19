@@ -1,34 +1,49 @@
 <template>
-  <section>
-    <header
-      class="header container mx-auto h-78 flex items-center justify-between"
-    >
+  <section v-if="isShow">
+    <header class="header container mx-auto h-78 flex items-center justify-between z-10 relative">
       <nav class="left inline-flex">
-        <img src="~/assets/logo.png" class="h-54 cursor-pointer" />
+        <a href="/"><img src="~/assets/logo.png" class="h-54 cursor-pointer" /></a>
 
-        <ul
-          class="flex space-x-40 ml-40 text-[#000] text-14 items-center font-normal"
-        >
-          <li
-            class="cursor-pointer py-15 px-5"
-            v-for="item in data.subNavs"
-            :key="item.key"
-          >
-            {{ item.text }}
+        <ul class="flex ml-40 text-[#000] text-14 items-center font-normal">
+          <li class="cursor-pointer py-15 text-center w-80" :key="item.key" v-for="item in subNavs">
+            <a :href="`/#${item.key}`">{{ item.text }}</a>
           </li>
         </ul>
       </nav>
+
       <nav class="right h-full">
         <ul class="flex items-center text-14 text-[#000] space-x-40 h-full">
           <li
-            v-for="i in data.btns"
+            v-for="(i, index) in btns"
             :key="i.key"
             class="cursor-pointer"
-            :class="
-              i.active && 'bg-[#4B7FE5] px-15 py-5 rounded-2xl text-white'
-            "
+            :class="index == activeNum && 'bg-[#4B7FE5] px-15 py-5 rounded-2xl text-white'"
+            @click="toContactPage(i.key)"
           >
             {{ i.text }}
+          </li>
+
+          <li>
+            <el-dropdown @command="handleCommand">
+              <span class="select-none outline-none border-none text-14 text-[#292D34] group">
+                <!-- 中文 -->
+                {{ $t("language") }}
+                <el-icon
+                  class="group-hover:rotate-180 transition-transform ease-in-out duration-300 ml-10"
+                  style="width: 10px"
+                >
+                  <ArrowDownBold style="width: 10px" />
+                </el-icon>
+              </span>
+
+              <template #dropdown>
+                <el-dropdown-menu>
+                  <el-dropdown-item :command="$t('language')" class="outline-none cursor-pointer">
+                    {{ $t("selectLang") }}
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
           </li>
         </ul>
       </nav>
@@ -36,10 +51,8 @@
 
     <slot />
 
-    <footer class="py-100">
-      <div
-        class="container mx-auto border-b border-b-1 border-[#6A6A6A] pb-100 flex"
-      >
+    <footer class="py-100" id="ability">
+      <div class="container mx-auto border-b border-b-1 border-[#6A6A6A] pb-100 flex">
         <section class="left w-1/2">
           <img src="~/assets/logo.png" class="h-54" />
         </section>
@@ -48,7 +61,7 @@
           <div>
             <ul class="text-[#666668] text-14 leading-42">
               <li
-                v-for="(item, index) in data.subNavs"
+                v-for="(item, index) in subNavs"
                 :key="item.key"
                 class="cursor-pointer"
                 :class="index == 0 ? 'text-[#4B7FE5]' : ''"
@@ -58,17 +71,13 @@
             </ul>
           </div>
 
-          <div>
+          <!-- <div>
             <ul class="text-[#666668] text-14 leading-42">
-              <li
-                v-for="item in data.subNavs"
-                :key="item.key"
-                class="cursor-pointer"
-              >
+              <li v-for="item in subNavs" :key="item.key" class="cursor-pointer">
                 {{ item.text }}
               </li>
             </ul>
-          </div>
+          </div> -->
         </section>
       </div>
     </footer>
@@ -76,48 +85,79 @@
 </template>
 
 <script setup lang="ts">
-const data = reactive({
-  subNavs: [
-    {
-      text: "产品",
-      key: "products",
-    },
-    {
-      text: "解决方案",
-      key: "solution",
-    },
-    {
-      text: "行业",
-      key: "trade",
-    },
-    {
-      text: "公司",
-      key: "company",
-    },
-  ],
+import { ElDropdown, ElDropdownMenu, ElDropdownItem } from "element-plus";
+import { ArrowDownBold } from "@element-plus/icons-vue";
 
-  btns: [
-    {
-      text: "合作伙伴的优惠",
-      key: "cooperate",
-      active: false,
-    },
-    {
-      text: "支持",
-      key: "support",
-      active: false,
-    },
-    {
-      text: "联系销售人员",
-      key: "contact",
-      active: true,
-    },
-  ],
+const router = useRouter();
+const route = useRoute();
+const { locale, t } = useI18n();
+
+const isShow = ref(false);
+
+const hash = computed(() => route.hash.slice(1));
+
+const subNavs = computed(() => [
+  {
+    text: t("product"),
+    key: "product",
+  },
+  {
+    text: t("solution"),
+    key: "solution",
+  },
+  {
+    text: t("trade"),
+    key: "trade",
+  },
+  {
+    text: t("company"),
+    key: "company",
+  },
+
+  {
+    text: t("ability"),
+    key: "ability",
+  },
+]);
+
+const btns = computed(() => [
+  {
+    text: t("preferential"),
+    key: "preferential",
+    active: false,
+  },
+  {
+    text: t("support"),
+    key: "support",
+    active: false,
+  },
+  {
+    text: t("contact"),
+    key: "contact",
+    active: true,
+  },
+]);
+
+onMounted(() => {
+  isShow.value = true;
 });
-</script>
 
-<style lang="scss" scoped>
-.header {
-  // background-color: red;
-}
-</style>
+const activeNum = computed(() => {
+  if (route.path == "/contact") {
+    const index = btns.value.findIndex((i) => i.key == hash.value);
+    return index > -1 ? index : btns.value.length - 1;
+  }
+
+  return -1;
+});
+
+const toContactPage = (key: string) => {
+  router.push(`/contact#${key}`);
+};
+
+const handleCommand = (command: string) => {
+  nextTick(() => {
+    locale.value = command == "中文" ? "en" : "zh";
+  });
+};
+</script>
